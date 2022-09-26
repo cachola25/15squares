@@ -15,6 +15,7 @@ public class MyViewController implements View.OnClickListener{
     public MyViewController(ArrayList<Button> _buttons){
         buttons = _buttons;
         toggle = true;
+        //TODO: Fix setButtons method to randomly set numbers text
         setButtons();
     }
 
@@ -27,12 +28,11 @@ public class MyViewController implements View.OnClickListener{
 
         int loop = 0;
         while(!listFull()) {
+            if (index == 16) {
+                break;
+            }
             if(!nums.contains(random)) {
-                if (loop == 15) {
-                    break;
-                }
-                buttons.get(loop).setText(""+random);
-                loop++;
+                buttons.get(index).setText(""+random);
                 index++;
                 nums.add(random);
             }else{
@@ -83,7 +83,7 @@ public class MyViewController implements View.OnClickListener{
 
     public boolean listFull() {
         for(Button button : buttons) {
-            if(button.getText() == "Button"){return false;}
+            if(button.getText().equals("Button")){return false;}
         }
         return true;
     }
