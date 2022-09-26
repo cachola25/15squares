@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         buttons.trimToSize();
 
         MyViewController controller = new MyViewController(buttons);
-
         for(int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setOnClickListener(controller);
         }

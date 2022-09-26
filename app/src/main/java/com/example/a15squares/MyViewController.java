@@ -4,11 +4,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class MyViewController implements View.OnClickListener{
 
     private ArrayList<Button> buttons;
+    private ArrayList<Integer> squareNums;
     private int toSwap;
     private boolean toggle;
 
@@ -16,32 +18,33 @@ public class MyViewController implements View.OnClickListener{
         buttons = _buttons;
         toggle = true;
         //TODO: Fix setButtons method to randomly set numbers text
+        //TODO: Make a has empty spot method, if square is next to empty spot then set opacity to 0
+        //TODO: Initialize square with value 16 but set the text to ' '
+        squareNums = new ArrayList<>(16);
+        for(int i = 0; i < 15; i++) {
+            squareNums.add(i + 1);
+        }
+        Log.d("shuffled",""+squareNums);
+        Collections.shuffle(squareNums);
+        Log.d("shuffled",""+squareNums);
         setButtons();
     }
 
     public void setButtons() {
-        int textNum = 0;
-        int index = 0;
         Random rand = new Random();
-        int random = rand.nextInt(16) + 1;
-        ArrayList<Integer> nums = new ArrayList<>();
+        squareNums.trimToSize();
+        buttons.trimToSize();
+        int randIndex = rand.nextInt(buttons.size());
 
-        int loop = 0;
-        while(!listFull()) {
-            if (index == 16) {
-                break;
-            }
-            if(!nums.contains(random)) {
-                buttons.get(index).setText(""+random);
-                index++;
-                nums.add(random);
+        int squareIndex = 0;
+        for(int i = 0; i < buttons.size(); i++) {
+            if(i == randIndex) {
+                buttons.get(i).setText(" ");
             }else{
-                while(nums.contains(random)) {
-                    random = rand.nextInt(16) + 1;
-                }
+                buttons.get(i).setText(""+squareNums.get(squareIndex));
+                squareIndex++;
             }
         }
-        buttons.get(index).setText(" ");
     }
 
     @Override
