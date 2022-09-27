@@ -19,8 +19,9 @@ public class MyViewController implements View.OnClickListener{
     private boolean toggle;
     private Button clickedButton;
     private TextView displayWin;
+    private Button resetButton;
 
-    public MyViewController(ArrayList<Button> _buttons){
+    public MyViewController(ArrayList<Button> _buttons, Button _resetButton){
         buttons = _buttons;
         toggle = true;
         //TODO: Make a has empty spot method, if square is next to empty spot then set opacity to 0
@@ -31,6 +32,7 @@ public class MyViewController implements View.OnClickListener{
         Collections.shuffle(squareNums);
         emptyButton = null;
         clickedButton = null;
+        resetButton = _resetButton;
         setButtons();
     }
 

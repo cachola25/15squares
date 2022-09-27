@@ -247,6 +247,16 @@
                 android:layout_height="50dp" />
         </TableRow>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="500dp" />
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RESET" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
