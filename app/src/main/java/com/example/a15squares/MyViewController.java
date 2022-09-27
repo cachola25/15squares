@@ -20,15 +20,13 @@ public class MyViewController implements View.OnClickListener{
     private Button clickedButton;
     private TextView displayWin;
     private Button resetButton;
+    private Button[][] temp;
 
     public MyViewController(ArrayList<Button> _buttons, Button _resetButton){
         buttons = _buttons;
         toggle = true;
         //TODO: Make a has empty spot method, if square is next to empty spot then set opacity to 0
         squareNums = new ArrayList<>(16);
-        for(int i = 0; i < 15; i++) {
-            squareNums.add(i + 1);
-        }
         emptyButton = null;
         clickedButton = null;
         resetButton = _resetButton;
@@ -39,7 +37,13 @@ public class MyViewController implements View.OnClickListener{
         Random rand = new Random();
         squareNums.trimToSize();
         buttons.trimToSize();
+        for(int i = 0; i < 15; i++) {
+            squareNums.add(i + 1);
+        }
         Collections.shuffle(squareNums);
+        while(!winnable(squareNums)) {
+            Collections.shuffle(squareNums);
+        }
         int randIndex = rand.nextInt(buttons.size());
         int squareIndex = 0;
         for(int i = 0; i < buttons.size(); i++) {
@@ -50,11 +54,21 @@ public class MyViewController implements View.OnClickListener{
                 squareIndex++;
             }
         }
+        for(int i = 0; i < buttons.size(); i++) {
+            if(!inRightPosition(i)) {
+                buttons.get(i).setBackgroundColor(Color.GRAY);
+            }else{
+                buttons.get(i).setBackgroundColor(Color.GREEN);
+            }
+        }
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == resetButton.getId()) {setButtons();}
+        if(v.getId() == resetButton.getId()) {
+//            squareNums = new ArrayList<>(squareNums.size());
+            setButtons();
+        }
 
         if(!hasEmptyNeighbor(v)){
             return;
@@ -92,7 +106,7 @@ public class MyViewController implements View.OnClickListener{
     }
 
     public boolean hasEmptyNeighbor(View view) {
-        Button[][] temp = new Button[4][4];
+        temp = new Button[4][4];
         int listIndex = 0;
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++) {
@@ -146,6 +160,36 @@ public class MyViewController implements View.OnClickListener{
         }
         //find id of adjacent buttons
         return false;
+    }
+
+    public boolean winnable(ArrayList<Integer> nums) {
+        int emptySquareRow = 34;
+        Button[][] temp = new Button[4][4];
+        boolean flag = true;
+        int listIndex = 0;
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 4; j++) {
+                temp[i][j] = buttons.get(listIndex);
+                listIndex++;
+            }
+        }
+        int i = 0;
+        for(; i < temp.length; i++) {
+            for(int j = 0; j < temp.length; j++) {
+                if(temp[i][j].getText() == " ") {
+                    flag = false;
+                    break;
+                }
+            }
+            if(!flag){
+                break;
+            }
+        }
+
+        emptySquareRow = i;
+
+        Log.d("emptySqaureRow",String.valueOf(emptySquareRow));
+        return true;
     }
 
     public boolean isValid(int row, int col, int rowLength, int colLength) {

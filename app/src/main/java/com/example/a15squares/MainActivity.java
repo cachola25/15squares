@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 buttons.get(i).setBackgroundColor(Color.GRAY);
             }
         }
+        resetButton.setOnClickListener(controller);
 
         TextView displayWin = findViewById(R.id.displayWin);
         controller.setDisplayWin(displayWin);
