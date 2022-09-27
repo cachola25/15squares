@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Button button14 = findViewById(R.id.button14);
         Button button15 = findViewById(R.id.button15);
         Button button16 = findViewById(R.id.button16);
+        Button resetButton = findViewById(R.id.resetButton);
 
         ArrayList<Button> buttons = new ArrayList<>();
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         buttons.add(button16);
         buttons.trimToSize();
 
-        MyViewController controller = new MyViewController(buttons);
+        MyViewController controller = new MyViewController(buttons,resetButton);
         for(int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setOnClickListener(controller);
             if(controller.inRightPosition(i)) {
