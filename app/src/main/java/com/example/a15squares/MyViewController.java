@@ -65,6 +65,7 @@ public class MyViewController implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == resetButton.getId()) {
+            displayWin.setVisibility(View.INVISIBLE);
             Collections.shuffle(squareNums);
             while(!winnableBoard()) {
                 Collections.shuffle(squareNums);
@@ -159,62 +160,31 @@ public class MyViewController implements View.OnClickListener{
             }
             if(flag){break;}
         }
-        //find id of adjacent buttons
         return false;
     }
 
     public boolean winnableBoard() {
         setButtons();
-        int emptySquareRow = 0;
-        Button[][] temp = new Button[4][4];
-        boolean flag = false;
-        int listIndex = 0;
-        for(int i = 0; i < 4; i++) {
-            for(int j = 0; j < 4; j++) {
-                temp[i][j] = buttons.get(listIndex);
-                listIndex++;
-            }
-        }
-
-        for(int i = 0; i < temp.length; i++) {
-            for(int j = 0; j < temp.length; j++) {
-                if(String.valueOf(temp[i][j].getText()).equals(" ")) {
-                    emptySquareRow = i;
-                    flag = true;
-                    break;
-                }
-            }
-            if(flag){
-                break;
-            }
-        }
-
+        //get text on button and see how many numbers are less than the number on that square
+        //do this for every square and get the total count, i.e look at the number on the square
+        //and go to the right and see how many squares have a less value
         int[] buttonVals = new int[buttons.size()];
         int i = 0;
         for(; i < buttonVals.length; i++){
-            if(String.valueOf(buttons.get(i).getText()).equals(" ")){break;}
-            buttonVals[i] = Integer.parseInt(String.valueOf(buttons.get(i).getText()));
-        }
-        for(; i < buttonVals.length; i++) {
+            if(String.valueOf(buttons.get(i).getText()).equals(" ")){continue;}
             buttonVals[i] = Integer.parseInt(String.valueOf(buttons.get(i).getText()));
         }
 
         int inversionCount = 0;
-        for(int j = 0; i < buttonVals.length; i++) {
+        for(int j = 0; j < buttonVals.length; j++) {
             int currNum = buttonVals[j];
-            for(int k = 0; k < buttonVals.length; k++) {
-                if(currNum > buttonVals[k]) {
+            for(int k = j; k < buttonVals.length; k++) {
+                if(currNum > buttonVals[k] && buttonVals[k] != 0) {
                     inversionCount++;
                 }
             }
         }
-
-        //get text on button and see how many numbers are less than the number on that square
-        //do this for every square and get the total count, i.e look at the number on the square
-        //and go to the right and see how many sqaures have a less value
-        Log.d("emptySqaureRow",String.valueOf(inversionCount));
-        if(inversionCount % 2 != 0) {return false;}
-        return true;
+        return (inversionCount % 2) == 0;
     }
 
     public boolean isValid(int row, int col, int rowLength, int colLength) {
