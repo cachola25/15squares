@@ -2,6 +2,7 @@ package com.example.a15squares;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.widget.Button;
@@ -55,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         MyViewController controller = new MyViewController(buttons);
         for(int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setOnClickListener(controller);
+            if(controller.inRightPosition(i)) {
+                buttons.get(i).setBackgroundColor(Color.GREEN);
+            }else{
+                buttons.get(i).setBackgroundColor(Color.GRAY);
+            }
         }
 
     }

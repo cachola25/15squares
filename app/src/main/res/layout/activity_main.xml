@@ -27,7 +27,8 @@
                 android:id="@+id/button1"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:text="Button" />
+                android:text="Button"
+                />
 
             <Space
                 android:layout_width="10dp"
