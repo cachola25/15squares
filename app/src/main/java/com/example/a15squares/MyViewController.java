@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -15,7 +17,8 @@ public class MyViewController implements View.OnClickListener{
     private Button emptyButton;
     private int toSwap;
     private boolean toggle;
-    Button clickedButton;
+    private Button clickedButton;
+    private TextView displayWin;
 
     public MyViewController(ArrayList<Button> _buttons){
         buttons = _buttons;
@@ -49,33 +52,6 @@ public class MyViewController implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        /*int index = 0;
-        int otherIndex = 0;
-        if(toggle) {
-            toSwap = v.getId();
-        }else if(!toggle) {
-            for(int i = 0; i < buttons.size(); i++) {
-                if(buttons.get(i).getId() == toSwap) {
-                    index = i;
-                    break;
-                }
-            }
-            for(int i = 0; i < buttons.size(); i++) {
-                if(buttons.get(i).getId() == v.getId()) {
-                    otherIndex = i;
-                    break;
-                }
-            }
-            if((buttons.get(index).getText() != " ") && (buttons.get(otherIndex).getText() != " ")) {return;}//do nothing
-            else {
-                String temp = (String) buttons.get(otherIndex).getText();
-                buttons.get(otherIndex).setText(buttons.get(index).getText());
-                buttons.get(index).setText(temp);
-
-            }
-        }
-        toggle = !toggle;
-        */
         if(!hasEmptyNeighbor(v)){
             return;
         }else{
@@ -93,12 +69,14 @@ public class MyViewController implements View.OnClickListener{
         }
 
         if(hasWinner()) {
-            Log.d("winner","Winner has won the game");
+            displayWin.setVisibility(View.VISIBLE);
+        }else{
+            displayWin.setVisibility(View.INVISIBLE);
         }
     }
 
     public boolean hasWinner() {
-        for(int i = 0; i < buttons.size(); i++) {
+        for(int i = 0; i < buttons.size() - 1; i++) {
             if(!inRightPosition(i)) {return false;}
         }
         return true;
@@ -121,10 +99,6 @@ public class MyViewController implements View.OnClickListener{
 
         int clickedButtonId = view.getId();
         clickedButton = null;
-        Button buttonToLeft = null;
-        Button buttonToRight = null;
-        Button buttonToUp = null;
-        Button buttonToLow = null;
 
         int clickedIndex = 0;
         for(; clickedIndex < buttons.size(); clickedIndex++) {
@@ -174,4 +148,6 @@ public class MyViewController implements View.OnClickListener{
         if(row < 0 || row >= rowLength || col < 0 || col >= colLength){return false;}
         return true;
     }
+
+    public void setDisplayWin(TextView view) {displayWin = view;}
 }

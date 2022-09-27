@@ -4,7 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/displayWin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="You Win!!"
+                android:textSize="96sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -12,23 +47,22 @@
         android:orientation="vertical">
 
         <Space
-            android:layout_width="10dp"
-            android:layout_height="100dp" />
+            android:layout_width="0dp"
+            android:layout_height="400dp" />
 
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <Space
-                android:layout_width="40dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/button1"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:text="Button"
-                />
+                android:text="Button" />
 
             <Space
                 android:layout_width="10dp"
@@ -71,7 +105,7 @@
             android:layout_height="wrap_content">
 
             <Space
-                android:layout_width="40dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content" />
 
             <Button
@@ -120,7 +154,7 @@
             android:layout_height="wrap_content">
 
             <Space
-                android:layout_width="40dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content" />
 
             <Button
@@ -169,7 +203,7 @@
             android:layout_height="wrap_content">
 
             <Space
-                android:layout_width="40dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content" />
 
             <Button
@@ -212,6 +246,7 @@
                 android:layout_width="80dp"
                 android:layout_height="50dp" />
         </TableRow>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

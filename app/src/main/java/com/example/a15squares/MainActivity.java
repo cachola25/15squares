@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -62,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
                 buttons.get(i).setBackgroundColor(Color.GRAY);
             }
         }
+
+        TextView displayWin = findViewById(R.id.displayWin);
+        controller.setDisplayWin(displayWin);
+
+        if(controller.hasWinner()) {
+            displayWin.setVisibility(View.VISIBLE);
+        }else{
+            displayWin.setVisibility(View.INVISIBLE);
+        }
+
 
     }
 }
