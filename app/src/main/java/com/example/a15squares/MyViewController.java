@@ -29,7 +29,6 @@ public class MyViewController implements View.OnClickListener{
         for(int i = 0; i < 15; i++) {
             squareNums.add(i + 1);
         }
-        Collections.shuffle(squareNums);
         emptyButton = null;
         clickedButton = null;
         resetButton = _resetButton;
@@ -40,6 +39,7 @@ public class MyViewController implements View.OnClickListener{
         Random rand = new Random();
         squareNums.trimToSize();
         buttons.trimToSize();
+        Collections.shuffle(squareNums);
         int randIndex = rand.nextInt(buttons.size());
         int squareIndex = 0;
         for(int i = 0; i < buttons.size(); i++) {
@@ -54,6 +54,8 @@ public class MyViewController implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        if(v.getId() == resetButton.getId()) {setButtons();}
+
         if(!hasEmptyNeighbor(v)){
             return;
         }else{
