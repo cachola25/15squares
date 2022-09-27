@@ -65,16 +65,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         resetButton.setOnClickListener(controller);
-
         TextView displayWin = findViewById(R.id.displayWin);
         controller.setDisplayWin(displayWin);
-
-        if(controller.hasWinner()) {
-            displayWin.setVisibility(View.VISIBLE);
-        }else{
-            displayWin.setVisibility(View.INVISIBLE);
-        }
-
 
     }
 }

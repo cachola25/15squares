@@ -15,17 +15,12 @@ public class MyViewController implements View.OnClickListener{
     private ArrayList<Button> buttons;
     private ArrayList<Integer> squareNums;
     private Button emptyButton;
-    private int toSwap;
-    private boolean toggle;
     private Button clickedButton;
     private TextView displayWin;
     private Button resetButton;
-    private Button[][] temp;
 
     public MyViewController(ArrayList<Button> _buttons, Button _resetButton){
         buttons = _buttons;
-        toggle = true;
-        //TODO: Make a has empty spot method, if square is next to empty spot then set opacity to 0
         squareNums = new ArrayList<>(16);
         emptyButton = null;
         clickedButton = null;
@@ -108,11 +103,11 @@ public class MyViewController implements View.OnClickListener{
     }
 
     public boolean hasEmptyNeighbor(View view) {
-        temp = new Button[4][4];
+        Button[][] buttonsArray = new Button[4][4];
         int listIndex = 0;
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++) {
-                temp[i][j] = buttons.get(listIndex);
+                buttonsArray[i][j] = buttons.get(listIndex);
                 listIndex++;
             }
         }
@@ -128,37 +123,35 @@ public class MyViewController implements View.OnClickListener{
             }
         }
 
-        boolean flag = false;
-        for(int i = 0; i < temp.length; i++) {
-            for(int j = 0; j < temp[i].length; j++) {
-                if (temp[i][j].equals(clickedButton)) {
-                    if(isValid(i+1,j,temp.length,temp[i].length)) {
-                        if(String.valueOf(temp[i+1][j].getText()).equals(" ")){
-                            emptyButton = temp[i+1][j];
+        for(int i = 0; i < buttonsArray.length; i++) {
+            for(int j = 0; j < buttonsArray[i].length; j++) {
+                if (buttonsArray[i][j].equals(clickedButton)) {
+                    if(isValid(i+1,j,buttonsArray.length,buttonsArray[i].length)) {
+                        if(String.valueOf(buttonsArray[i+1][j].getText()).equals(" ")){
+                            emptyButton = buttonsArray[i+1][j];
                             return true;
                         }
                     }
-                    if(isValid(i-1,j,temp.length,temp[i].length)) {
-                        if(String.valueOf(temp[i-1][j].getText()).equals(" ")){
-                            emptyButton = temp[i-1][j];
+                    if(isValid(i-1,j,buttonsArray.length,buttonsArray[i].length)) {
+                        if(String.valueOf(buttonsArray[i-1][j].getText()).equals(" ")){
+                            emptyButton = buttonsArray[i-1][j];
                             return true;
                         }
                     }
-                    if(isValid(i,j+1,temp.length,temp[i].length)) {
-                        if(String.valueOf(temp[i][j+1].getText()).equals(" ")){
-                            emptyButton = temp[i][j+1];
+                    if(isValid(i,j+1,buttonsArray.length,buttonsArray[i].length)) {
+                        if(String.valueOf(buttonsArray[i][j+1].getText()).equals(" ")){
+                            emptyButton = buttonsArray[i][j+1];
                             return true;
                         }
                     }
-                    if(isValid(i,j-1,temp.length,temp[i].length)) {
-                        if(String.valueOf(temp[i][j-1].getText()).equals(" ")){
-                            emptyButton = temp[i][j-1];
+                    if(isValid(i,j-1,buttonsArray.length,buttonsArray[i].length)) {
+                        if(String.valueOf(buttonsArray[i][j-1].getText()).equals(" ")){
+                            emptyButton = buttonsArray[i][j-1];
                             return true;
                         }
                     }
                 }
             }
-            if(flag){break;}
         }
         return false;
     }
