@@ -30,20 +30,19 @@ public class MyViewController implements View.OnClickListener{
         emptyButton = null;
         clickedButton = null;
         resetButton = _resetButton;
-        setButtons();
+        for(int i = 0; i < 15; i++) {
+            squareNums.add(i + 1);
+        }
+        Collections.shuffle(squareNums);
+        while(!winnableBoard()) {
+            Collections.shuffle(squareNums);
+        }
     }
 
     public void setButtons() {
         Random rand = new Random();
         squareNums.trimToSize();
         buttons.trimToSize();
-        for(int i = 0; i < 15; i++) {
-            squareNums.add(i + 1);
-        }
-        Collections.shuffle(squareNums);
-        while(!winnable(squareNums)) {
-            Collections.shuffle(squareNums);
-        }
         int randIndex = rand.nextInt(buttons.size());
         int squareIndex = 0;
         for(int i = 0; i < buttons.size(); i++) {
@@ -66,8 +65,10 @@ public class MyViewController implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == resetButton.getId()) {
-//            squareNums = new ArrayList<>(squareNums.size());
-            setButtons();
+            Collections.shuffle(squareNums);
+            while(!winnableBoard()) {
+                Collections.shuffle(squareNums);
+            }
         }
 
         if(!hasEmptyNeighbor(v)){
@@ -162,10 +163,11 @@ public class MyViewController implements View.OnClickListener{
         return false;
     }
 
-    public boolean winnable(ArrayList<Integer> nums) {
-        int emptySquareRow = 34;
+    public boolean winnableBoard() {
+        setButtons();
+        int emptySquareRow = 0;
         Button[][] temp = new Button[4][4];
-        boolean flag = true;
+        boolean flag = false;
         int listIndex = 0;
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++) {
@@ -173,22 +175,45 @@ public class MyViewController implements View.OnClickListener{
                 listIndex++;
             }
         }
-        int i = 0;
-        for(; i < temp.length; i++) {
+
+        for(int i = 0; i < temp.length; i++) {
             for(int j = 0; j < temp.length; j++) {
-                if(temp[i][j].getText() == " ") {
-                    flag = false;
+                if(String.valueOf(temp[i][j].getText()).equals(" ")) {
+                    emptySquareRow = i;
+                    flag = true;
                     break;
                 }
             }
-            if(!flag){
+            if(flag){
                 break;
             }
         }
 
-        emptySquareRow = i;
+        int[] buttonVals = new int[buttons.size()];
+        int i = 0;
+        for(; i < buttonVals.length; i++){
+            if(String.valueOf(buttons.get(i).getText()).equals(" ")){break;}
+            buttonVals[i] = Integer.parseInt(String.valueOf(buttons.get(i).getText()));
+        }
+        for(; i < buttonVals.length; i++) {
+            buttonVals[i] = Integer.parseInt(String.valueOf(buttons.get(i).getText()));
+        }
 
-        Log.d("emptySqaureRow",String.valueOf(emptySquareRow));
+        int inversionCount = 0;
+        for(int j = 0; i < buttonVals.length; i++) {
+            int currNum = buttonVals[j];
+            for(int k = 0; k < buttonVals.length; k++) {
+                if(currNum > buttonVals[k]) {
+                    inversionCount++;
+                }
+            }
+        }
+
+        //get text on button and see how many numbers are less than the number on that square
+        //do this for every square and get the total count, i.e look at the number on the square
+        //and go to the right and see how many sqaures have a less value
+        Log.d("emptySqaureRow",String.valueOf(inversionCount));
+        if(inversionCount % 2 != 0) {return false;}
         return true;
     }
 
