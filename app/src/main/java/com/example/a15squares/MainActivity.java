@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //initialize buttons
         Button button1 = findViewById(R.id.button1);
         Button button2 = findViewById(R.id.button2);
         Button button3 = findViewById(R.id.button3);
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Button resetButton = findViewById(R.id.resetButton);
 
         ArrayList<Button> buttons = new ArrayList<>();
-
+        //add buttons to an arraylist
         buttons.add(button1);
         buttons.add(button2);
         buttons.add(button3);
@@ -56,17 +57,12 @@ public class MainActivity extends AppCompatActivity {
         buttons.trimToSize();
 
         MyViewController controller = new MyViewController(buttons,resetButton);
+        //set buttons to controller
         for(int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setOnClickListener(controller);
-            if(controller.inRightPosition(i)) {
-                buttons.get(i).setBackgroundColor(Color.GREEN);
-            }else{
-                buttons.get(i).setBackgroundColor(Color.GRAY);
-            }
         }
         resetButton.setOnClickListener(controller);
         TextView displayWin = findViewById(R.id.displayWin);
         controller.setDisplayWin(displayWin);
-
     }
 }

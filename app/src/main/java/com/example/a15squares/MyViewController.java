@@ -29,6 +29,7 @@ public class MyViewController implements View.OnClickListener{
             squareNums.add(i + 1);
         }
         Collections.shuffle(squareNums);
+        //keep shuffling until a solvable board is reached
         while(!winnableBoard()) {
             Collections.shuffle(squareNums);
         }
@@ -40,6 +41,7 @@ public class MyViewController implements View.OnClickListener{
         buttons.trimToSize();
         int randIndex = rand.nextInt(buttons.size());
         int squareIndex = 0;
+        //initialize buttons with numbers and leaving one blank
         for(int i = 0; i < buttons.size(); i++) {
             if(i == randIndex) {
                 buttons.get(i).setText(" ");
@@ -48,6 +50,7 @@ public class MyViewController implements View.OnClickListener{
                 squareIndex++;
             }
         }
+        //check if some buttons are already in the right spot
         for(int i = 0; i < buttons.size(); i++) {
             if(!inRightPosition(i)) {
                 buttons.get(i).setBackgroundColor(Color.GRAY);
@@ -59,6 +62,7 @@ public class MyViewController implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        //resets the game by shuffling the board
         if(v.getId() == resetButton.getId()) {
             displayWin.setVisibility(View.INVISIBLE);
             Collections.shuffle(squareNums);
@@ -70,11 +74,13 @@ public class MyViewController implements View.OnClickListener{
         if(!hasEmptyNeighbor(v)){
             return;
         }else{
+            //Swap the text between the two buttons
             String temp = String.valueOf(clickedButton.getText());
             clickedButton.setText(" ");
             emptyButton.setText(temp);
         }
 
+        //check if they're in the right position after a swap
         for(int i = 0; i < buttons.size(); i++) {
             if(!inRightPosition(i)) {
                buttons.get(i).setBackgroundColor(Color.GRAY);
@@ -83,6 +89,7 @@ public class MyViewController implements View.OnClickListener{
             }
         }
 
+        //see if user has solved it
         if(hasWinner()) {
             displayWin.setVisibility(View.VISIBLE);
         }else{
@@ -90,6 +97,11 @@ public class MyViewController implements View.OnClickListener{
         }
     }
 
+    /**
+     *
+     * @return if all buttons are in the right spot, it returns true
+     * if not, then it returns false
+     */
     public boolean hasWinner() {
         for(int i = 0; i < buttons.size() - 1; i++) {
             if(!inRightPosition(i)) {return false;}
@@ -97,14 +109,29 @@ public class MyViewController implements View.OnClickListener{
         return true;
     }
 
+    /**
+     *
+     * @param index the index of the button being looked at
+     * @return true if number on butto matches the index it is in in the arraylist,
+     * returns false otherwise
+     */
     public boolean inRightPosition(int index) {
         if(String.valueOf(buttons.get(index).getText()).equals(String.valueOf(index+1))) {return true;}
         return false;
     }
 
+    /**
+     *
+     * @param view the current view/button being clicked on
+     * @return returns true if there is a blank spot next to a button
+     * returns false if not
+     */
     public boolean hasEmptyNeighbor(View view) {
         Button[][] buttonsArray = new Button[4][4];
         int listIndex = 0;
+        //initialize 2d array of the buttons since
+        //using an array makes it easier to look at
+        //what buttons are adjacent to the clicked button
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++) {
                 buttonsArray[i][j] = buttons.get(listIndex);
@@ -114,8 +141,8 @@ public class MyViewController implements View.OnClickListener{
 
         int clickedButtonId = view.getId();
         clickedButton = null;
-
         int clickedIndex = 0;
+        //find the button that has been clicked on
         for(; clickedIndex < buttons.size(); clickedIndex++) {
             if(buttons.get(clickedIndex).getId() == clickedButtonId) {
                 clickedButton = buttons.get(clickedIndex);
@@ -123,6 +150,7 @@ public class MyViewController implements View.OnClickListener{
             }
         }
 
+        //check if the clicked button has an empty neighbors
         for(int i = 0; i < buttonsArray.length; i++) {
             for(int j = 0; j < buttonsArray[i].length; j++) {
                 if (buttonsArray[i][j].equals(clickedButton)) {
@@ -156,11 +184,16 @@ public class MyViewController implements View.OnClickListener{
         return false;
     }
 
+    /**
+     *
+     * @return returns true if the board is in a winnable position
+     * returns false if the board is not winnable
+     */
     public boolean winnableBoard() {
         setButtons();
         //get text on button and see how many numbers are less than the number on that square
         //do this for every square and get the total count, i.e look at the number on the square
-        //and go to the right and see how many squares have a less value
+        //and go to the right and see how many squares have a lower value
         int[] buttonVals = new int[buttons.size()];
         int i = 0;
         for(; i < buttonVals.length; i++){
@@ -168,6 +201,7 @@ public class MyViewController implements View.OnClickListener{
             buttonVals[i] = Integer.parseInt(String.valueOf(buttons.get(i).getText()));
         }
 
+        //calculate the inversion sum of the current board
         int inversionCount = 0;
         for(int j = 0; j < buttonVals.length; j++) {
             int currNum = buttonVals[j];
@@ -177,13 +211,27 @@ public class MyViewController implements View.OnClickListener{
                 }
             }
         }
+        //if inversion sum is even, return true, return false if odd
         return (inversionCount % 2) == 0;
     }
 
+    /**
+     *
+     * @param row row index being looked at
+     * @param col column index being looked at
+     * @param rowLength maximum number of rows in the array
+     * @param colLength maximum number of columnsin the array
+     * @return true if the row and col indexes are in the bounds of the array
+     * returns false if the indexes are out of bounds
+     */
     public boolean isValid(int row, int col, int rowLength, int colLength) {
         if(row < 0 || row >= rowLength || col < 0 || col >= colLength){return false;}
         return true;
     }
 
+    /**
+     *
+     * @param view the text to be displayed
+     */
     public void setDisplayWin(TextView view) {displayWin = view;}
 }

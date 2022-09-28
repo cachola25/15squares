@@ -1,0 +1,17 @@
+/**
+External Citation
+ Problem: Did not know how to randomly set the numbers
+ on the buttons
+ Resource: CS301 group
+ Solution: I was told about the Collections.shuffle method
+ and used that
+*/
+
+/**
+External Citation
+ Problem: Did not know how to see if the board is in
+ a winnable position or not
+ Resource:  http://mathworld.wolfram.com/15Puzzle.html
+ Solution: Learned the concept of inversion counts/sum
+ to notice when a board is winnable or not
+*/
