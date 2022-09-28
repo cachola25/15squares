@@ -53,9 +53,9 @@ public class MyViewController implements View.OnClickListener{
         //check if some buttons are already in the right spot
         for(int i = 0; i < buttons.size(); i++) {
             if(!inRightPosition(i)) {
-                buttons.get(i).setBackgroundColor(Color.GRAY);
+                buttons.get(i).setBackgroundColor(Color.BLACK);
             }else{
-                buttons.get(i).setBackgroundColor(Color.GREEN);
+                buttons.get(i).setBackgroundColor(0xFFFFA500);
             }
         }
     }
@@ -83,9 +83,9 @@ public class MyViewController implements View.OnClickListener{
         //check if they're in the right position after a swap
         for(int i = 0; i < buttons.size(); i++) {
             if(!inRightPosition(i)) {
-               buttons.get(i).setBackgroundColor(Color.GRAY);
+               buttons.get(i).setBackgroundColor(Color.BLACK);
             }else{
-                buttons.get(i).setBackgroundColor(Color.GREEN);
+                buttons.get(i).setBackgroundColor(0xFFFFA500);
             }
         }
 
@@ -112,7 +112,7 @@ public class MyViewController implements View.OnClickListener{
     /**
      *
      * @param index the index of the button being looked at
-     * @return true if number on butto matches the index it is in in the arraylist,
+     * @return true if number on button matches the index it is in in the arraylist,
      * returns false otherwise
      */
     public boolean inRightPosition(int index) {
