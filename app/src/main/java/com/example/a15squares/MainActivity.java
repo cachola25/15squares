@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * Jayven Cachola
+ * September 29 2022
+ * Enhancements: Only displays a solvable board
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
