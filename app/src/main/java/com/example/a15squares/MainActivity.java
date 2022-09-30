@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i <  buttons.size(); i++) {
             buttons.get(i).setBackgroundColor(Color.BLACK);
             buttons.get(i).setTextColor(Color.WHITE);
+            buttons.get(i).setTextSize(30);
         }
         MyViewController controller = new MyViewController(buttons,resetButton);
         //set buttons to controller

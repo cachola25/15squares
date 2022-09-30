@@ -33,6 +33,7 @@ public class MyViewController implements View.OnClickListener{
         while(!winnableBoard()) {
             Collections.shuffle(squareNums);
         }
+        setButtons();
     }
 
     public void setButtons() {
@@ -69,6 +70,7 @@ public class MyViewController implements View.OnClickListener{
             while(!winnableBoard()) {
                 Collections.shuffle(squareNums);
             }
+            setButtons();
         }
 
         if(!hasEmptyNeighbor(v)){
