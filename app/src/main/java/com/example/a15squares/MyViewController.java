@@ -33,7 +33,6 @@ public class MyViewController implements View.OnClickListener{
         while(!winnableBoard()) {
             Collections.shuffle(squareNums);
         }
-        setButtons();
     }
 
     public void setButtons() {
@@ -70,7 +69,6 @@ public class MyViewController implements View.OnClickListener{
             while(!winnableBoard()) {
                 Collections.shuffle(squareNums);
             }
-            setButtons();
         }
 
         if(!hasEmptyNeighbor(v)){
@@ -213,8 +211,9 @@ public class MyViewController implements View.OnClickListener{
                 }
             }
         }
+        Log.d("inversionCount",""+inversionCount);
         //if inversion sum is even, return true, return false if odd
-        return (inversionCount % 2) == 0;
+        return inversionCount % 2 == 0;
     }
 
     /**
